@@ -1,0 +1,39 @@
+<div class="header">
+  <h1>All our Flats (<%= @flats.count %>)</h1>
+  <div class="search-bar">
+    <%= form_with(url: flats_path, method: :get, local: true) do %>
+      <%= label_tag :query, "Search for flats" %>
+      <%= text_field_tag :query, params[:query] %>
+      <%= submit_tag "Search", class: "btn btn-success" %>
+    <% end %>
+    <%= link_to "Add Flat", new_flat_path, class: "btn btn-primary" %>
+  </div>
+</div>
+
+<% if params[:query].present? %>
+  <p>You searched for <strong><%= params[:query] %></strong>. We found <%= @flats.count %> flats out of our <%= Flat.count %> on our website.</p>
+<% end %>
+
+<div class="flats">
+  <% @flats.each do |flat| %>
+    <div class="flat">
+      <% if flat.picture_url.present? %>
+        <img src="<%= flat.picture_url %>" alt="<%= flat.name %>">
+      <% else %>
+        <p>No image available</p>
+      <% end %>
+      <div class="details">
+        <h2><%= link_to flat.name, flat_path(flat) %></h2>
+        <p><%= flat.address %></p>
+        <p><%= flat.description %></p>
+        <p>Price per night: <%= flat.price_per_night %> USD</p>
+        <p>Number of guests: <%= flat.number_of_guests %></p>
+      </div>
+      <div class="actions">
+        <%= link_to "More info", flat_path(flat) %>
+        <%= link_to "Edit", edit_flat_path(flat), class: "edit" %>
+        <%= link_to "Remove", flat_path(flat), method: :delete, data: { confirm: "Are you sure?" }, class: "destroy" %>
+      </div>
+    </div>
+  <% end %>
+</div>

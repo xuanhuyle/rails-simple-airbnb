@@ -1,0 +1,15 @@
+<h1><%= @flat.name %></h1>
+
+<% if @flat.picture_url.present? %>
+  <img src="<%= @flat.picture_url %>" alt="<%= @flat.name %>">
+<% else %>
+  <p>No image available</p>
+<% end %>
+<p><%= @flat.address %></p>
+<p><%= @flat.description %></p>
+<p>Price per night: <%= @flat.price_per_night %> USD</p>
+<p>Number of guests: <%= @flat.number_of_guests %></p>
+
+<%= link_to "Edit", edit_flat_path(@flat) %>
+<%= link_to "Back to flats", flats_path %>
+<%= link_to "Destroy", flat_path(@flat), method: :delete, data: { confirm: "Are you sure?" } %>
